@@ -104,7 +104,9 @@ def task_toggle_completed(request, pk):
     task = Task.objects.get(id=pk)
     task.is_completed = not task.is_completed
     task.save()
-    return HttpResponseRedirect(request.GET.get("next", reverse_lazy("task_manager_app:task-list")))
+    return HttpResponseRedirect(
+        request.GET.get("next", reverse_lazy("task_manager_app:task-list"))
+    )
 
 
 class PositionListView(LoginRequiredMixin, generic.ListView):
