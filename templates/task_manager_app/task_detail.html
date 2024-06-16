@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters %}
+{% block content %}
+  <h1>
+    Task details
+    {% include "includes/task_toggle_completed_button.html" with task=task %}
+    <a href="{% url "task_manager_app:task-delete" pk=task.id %}" class="btn btn-danger link-to-page">
+      Delete
+    </a>
+    <a href="{% url "task_manager_app:task-update" pk=task.id %}" class="btn btn-secondary link-to-page">
+      Update
+    </a>
+  </h1>
+  <hr>
+  <ul>
+    <li>
+      <p>Name: {{ task.name }}</p>
+    </li>
+    <li>
+      <p>Description: {{ task.description }}</p>
+    </li>
+    <li>
+      <p>Deadline: {{ task.deadline }}</p>
+    </li>
+    <li>
+      <p>Priority: {{ task.priority }}</p>
+    </li>
+    <li>
+      <p>Completed: {{ task.is_completed }}</p>
+    </li>
+    <li>
+      <p>Task type: {{ task.task_type }}</p>
+    </li>
+  </ul>
+  <h3>Assignees:</h3>
+  <hr>
+  <ul>
+    {% if task.assignees.all %}
+      {% for worker in task.assignees.all %}
+        <li>
+          <p>{{ worker.username }}</p>
+        </li>
+      {% endfor %}
+    {% else %}
+      <li>
+        <p>There is noone assigned to this task</p>
+      </li>
+    {% endif %}
+  </ul>
+  <form action="{% url "task_manager_app:task-update-assignees" pk=task.id %}" method="post">
+    {% csrf_token %}
+    {{ assignees_form|crispy }}
+    <input type="submit" class="btn btn-primary">
+  </form>
+{% endblock %}
