@@ -1,0 +1,4 @@
+<a href="{% url "task_manager_app:task-toggle-completed" pk=task.id %}?next={{ request.path|urlencode }}"
+   class="btn btn-primary btn-sm">
+  {{ task.is_completed|yesno:"Open,Close" }} task
+</a>
