@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1>
+    Position details
+    <a href="{% url "task_manager_app:position-delete" pk=position.id %}" class="btn btn-danger link-to-page">
+      Delete
+    </a>
+    <a href="{% url "task_manager_app:position-update" pk=position.id %}" class="btn btn-secondary link-to-page">
+      Update
+    </a>
+  </h1>
+  <hr>
+  <p>Position: {{ position }}</p>
+{% endblock %}
