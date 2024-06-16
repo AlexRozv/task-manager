@@ -24,4 +24,4 @@ python manage.py runserver #starts Django server
 * Open/closed task lists for each worker
 
 ## Demo
-TODO: add demo
+![Website interface](demo.png)
