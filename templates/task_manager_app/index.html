@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1>Task manager</h1>
+  <hr>
+  <h4>There are:</h4>
+  <p>{{ open_tasks_count }} open task{{ open_tasks_count|pluralize }}</p>
+  <p>{{ completed_tasks_count }} completed task{{ completed_tasks_count|pluralize }}</p>
+  <p>{{ workers_count }} team member{{ workers_count|pluralize }} working on them</p>
+  <hr>
+  <p>You've visited this page {{ num_visits }} time{{ num_visits|pluralize }}</p>
+{% endblock %}
