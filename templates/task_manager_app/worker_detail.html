@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1>
+    Worker details
+    <a href="{% url "task_manager_app:worker-delete" pk=worker.id %}" class="btn btn-danger link-to-page">
+      Delete
+    </a>
+    <a href="{% url "task_manager_app:worker-update" pk=worker.id %}" class="btn btn-secondary link-to-page">
+      Update
+    </a>
+  </h1>
+  <hr>
+  <ul>
+    <li>
+      <p>Username: {{ worker.username }}</p>
+    </li>
+    <li>
+      <p>Name: {{ worker.first_name }} {{ worker.last_name }}</p>
+    </li>
+    <li>
+      <p>Position: {{ worker.position }}</p>
+    </li>
+  </ul>
+  {% if open_task_list %}
+    <h3>Open tasks:</h3>
+    {% include "includes/task_table.html" with task_list=open_task_list %}
+  {% endif %}
+  {% if completed_task_list %}
+    <h3>Completed tasks:</h3>
+    {% include "includes/task_table.html" with task_list=completed_task_list %}
+  {% endif %}
+{% endblock %}

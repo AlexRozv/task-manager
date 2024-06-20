@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1>Tasks list
+    <a href="{% url "task_manager_app:task-create" %}" class="btn btn-primary link-to-page">
+      Create
+    </a>
+  </h1>
+  <hr>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-6">
+      <h3>Open tasks</h3>
+        {% if task_list %}
+          {% include "includes/task_table.html" with task_list=task_list %}
+        {% else %}
+          <p>there are no open tasks left</p>
+        {% endif %}
+      </div>
+      <div class="col-sm-6">
+        <h3>Completed tasks</h3>
+        {% if task_list %}
+          {% include "includes/task_table.html" with task_list=completed_task_list %}
+        {% else %}
+          <p>there are no completed tasks yet</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+{% endblock %}
