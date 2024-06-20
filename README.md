@@ -9,8 +9,10 @@ Django project for managing tasks for IT companies. Using this simple app you ca
 * HTML/CSS
 * Bootstrap
 
-## Check it out!
-TODO: add deployed project
+## [Check it out!](https://mysite-g74a.onrender.com)
+### Log in credentials:
+* username: test_user
+* password: test12345
 
 ## Installation
 Python3 must be already installed
