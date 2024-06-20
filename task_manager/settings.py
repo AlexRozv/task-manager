@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+import dj_database_url
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -26,6 +27,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -55,10 +57,10 @@ TEMPLATES = [
 WSGI_APPLICATION = "task_manager.wsgi.application"
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
+    "default": dj_database_url.parse(
+        url="postgresql://task_manager_db_owner:EbtCnrJp59ci@ep-shrill-pond-a29f58bt.eu-central-1.aws.neon.tech/task_manager_db?sslmode=require",
+        conn_max_age=600, conn_health_checks=True
+    )
 }
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -90,9 +92,12 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 
-STATICFILES_DIRS = (BASE_DIR / "static",)
+if not DEBUG:
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-STATIC_ROOT = BASE_DIR / "staticfiles"
+
+STATICFILES_DIRS = (BASE_DIR / "static",)
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
 
