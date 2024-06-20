@@ -9,9 +9,9 @@ SECRET_KEY = os.environ.get(
     "django-insecure-0uya@ux+&exot13$e^3v!!pmf5&g$o=0dudfq+y06pzij65dt-"
 )
 
-DEBUG = os.environ.get("DJANGO_DEBUG", "") != "False"
+DEBUG = "False"
 
-ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
+ALLOWED_HOSTS = ["127.0.0.1", "localhost", "mysite-g74a.onrender.com"]
 
 INSTALLED_APPS = [
     "django.contrib.admin",
