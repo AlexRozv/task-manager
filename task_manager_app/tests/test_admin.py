@@ -7,7 +7,6 @@ from task_manager_app.models import Position
 
 class AdminSiteTests(TestCase):
     def setUp(self):
-        self.client = Client()
         self.admin_user = get_user_model().objects.create_superuser(
             username="admin", password="test123"
         )
