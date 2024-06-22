@@ -4,9 +4,9 @@ import dj_database_url
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# add SECRET_KEY to your .env file or add it directly here
 SECRET_KEY = os.environ.get(
     "DJANGO_SECRET_KEY",
-    "django-insecure-0uya@ux+&exot13$e^3v!!pmf5&g$o=0dudfq+y06pzij65dt-"
 )
 
 DEBUG = "False"
@@ -20,9 +20,9 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "task_manager_app",
     "crispy_forms",
-    "crispy_bootstrap4"
+    "crispy_bootstrap4",
+    "task_manager_app",
 ]
 
 MIDDLEWARE = [
@@ -57,10 +57,10 @@ TEMPLATES = [
 WSGI_APPLICATION = "task_manager.wsgi.application"
 
 DATABASES = {
-    "default": dj_database_url.parse(
-        url="postgresql://task_manager_db_owner:EbtCnrJp59ci@ep-shrill-pond-a29f58bt.eu-central-1.aws.neon.tech/task_manager_db?sslmode=require",
-        conn_max_age=600, conn_health_checks=True
-    )
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
+    }
 }
 
 AUTH_PASSWORD_VALIDATORS = [
