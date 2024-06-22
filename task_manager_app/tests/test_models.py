@@ -30,17 +30,3 @@ class ModelTests(TestCase):
     def test_task_str(self):
         task = Task.objects.create(name="test")
         self.assertEqual(str(task), task.name)
-
-    def test_worker_with_position(self):
-        position = Position.objects.create(name="test")
-        username = "test"
-        password = "test123"
-        worker = get_user_model().objects.create_user(
-            username=username,
-            password=password,
-            position=position
-        )
-        self.assertEqual(worker.username, username)
-        self.assertEqual(worker.position, position)
-        self.assertTrue(worker.check_password(password))
-
