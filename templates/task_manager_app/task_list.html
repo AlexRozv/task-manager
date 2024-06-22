@@ -1,17 +1,24 @@
 {% extends "base.html" %}
+{% load crispy_forms_filters %}
 {% block content %}
   <h1>Tasks list
     <a href="{% url "task_manager_app:task-create" %}" class="btn btn-primary link-to-page">
       Create
     </a>
   </h1>
+  <form method="get" action="">
+  {% csrf_token %}
+  {{ search_form|crispy }}
+  <br>
+  <input type="submit" class="btn btn-primary" value="search">
+</form>
   <hr>
   <div class="container-fluid">
     <div class="row">
       <div class="col-sm-6">
       <h3>Open tasks</h3>
         {% if task_list %}
-          {% include "includes/task_table.html" with task_list=task_list %}
+          {% include "includes/task_table.html" with task_list=open_task_list %}
         {% else %}
           <p>there are no open tasks left</p>
         {% endif %}

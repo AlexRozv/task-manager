@@ -31,3 +31,7 @@ class UpdateTaskAssigneesForm(forms.ModelForm):
     class Meta:
         model = Task
         fields = ("assignees", )
+
+
+class TaskNameSearchForm(forms.Form):
+    name = forms.CharField(max_length=255, required=False)

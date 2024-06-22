@@ -5,7 +5,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
 
-from task_manager_app.forms import WorkerCreationForm, UpdateTaskAssigneesForm
+from task_manager_app.forms import WorkerCreationForm, UpdateTaskAssigneesForm, TaskNameSearchForm
 from task_manager_app.models import Task, TaskType, Position, Worker
 
 
@@ -27,12 +27,24 @@ def index(request):
 
 class TaskListView(LoginRequiredMixin, generic.ListView):
     model = Task
-    queryset = Task.objects.filter(is_completed=False)
+    queryset = Task.objects.all()
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(TaskListView, self).get_context_data(**kwargs)
-        context["completed_task_list"] = Task.objects.filter(is_completed=True)
+        name = self.request.GET.get("name", "")
+        context["completed_task_list"] = context["task_list"].filter(is_completed=True)
+        context["open_task_list"] = context["task_list"].filter(is_completed=False)
+        context["search_form"] = TaskNameSearchForm(
+            initial={"name": name}
+        )
         return context
+
+    def get_queryset(self):
+        queryset = Task.objects.all()
+        name = self.request.GET.get("name")
+        if name:
+            return queryset.filter(name__icontains=name)
+        return queryset
 
 
 class TaskDetailView(LoginRequiredMixin, generic.DetailView):
