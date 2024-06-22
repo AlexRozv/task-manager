@@ -49,3 +49,12 @@ class PrivateTaskTest(TestCase):
         self.assertEqual(res.status_code, 200)
         self.assertEqual(res.context["task"], task)
         self.assertTemplateUsed("task_manager_app/task_detail.html")
+
+    def test_task_toggle_completed_ok(self):
+        task = Task.objects.create(name="test")
+        self.client.get(reverse("task_manager_app:task-toggle-completed", kwargs={"pk": task.id}))
+        task.refresh_from_db()
+        self.assertEqual(task.is_completed, True)
+        self.client.get(reverse("task_manager_app:task-toggle-completed", kwargs={"pk": task.id}))
+        task.refresh_from_db()
+        self.assertEqual(task.is_completed, False)
