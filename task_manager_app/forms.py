@@ -35,3 +35,7 @@ class UpdateTaskAssigneesForm(forms.ModelForm):
 
 class TaskNameSearchForm(forms.Form):
     name = forms.CharField(max_length=255, required=False)
+
+
+class PositionNameSearchForm(forms.Form):
+    name = forms.CharField(max_length=255, required=False)
