@@ -85,6 +85,21 @@ class TaskTypeListView(LoginRequiredMixin, generic.ListView):
     template_name = "task_manager_app/task_type_list.html"
     context_object_name = "task_type_list"
 
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(TaskTypeListView, self).get_context_data(**kwargs)
+        name = self.request.GET.get("name", "")
+        context["search_form"] = TaskNameSearchForm(
+            initial={"name": name}
+        )
+        return context
+
+    def get_queryset(self):
+        queryset = TaskType.objects.all()
+        name = self.request.GET.get("name")
+        if name:
+            return queryset.filter(name__icontains=name)
+        return queryset
+
 
 class TaskTypeDetailView(LoginRequiredMixin, generic.DetailView):
     model = TaskType
