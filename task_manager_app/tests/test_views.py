@@ -1,8 +1,8 @@
 from django.contrib.auth import get_user_model
-from django.test import TestCase, Client
+from django.test import TestCase
 from django.urls import reverse
 
-from task_manager_app.models import Task
+from task_manager_app.models import Task, Worker
 
 TASK_LIST_URL = reverse("task_manager_app:task-list")
 TASK_DETAIL_URL = reverse("task_manager_app:task-detail", kwargs={"pk": 1})
@@ -58,3 +58,14 @@ class PrivateTaskTest(TestCase):
         self.client.get(reverse("task_manager_app:task-toggle-completed", kwargs={"pk": task.id}))
         task.refresh_from_db()
         self.assertEqual(task.is_completed, False)
+
+    def test_index_numbers_ok(self):
+        res = self.client.get(reverse("task_manager_app:index"))
+        self.assertEqual(res.status_code, 200)
+        open_tasks_count = Task.objects.filter(is_completed=False).count()
+        completed_tasks_count = Task.objects.filter(is_completed=True).count()
+        workers_count = Worker.objects.count()
+        self.assertEqual(res.context["open_tasks_count"], open_tasks_count)
+        self.assertEqual(res.context["completed_tasks_count"], completed_tasks_count)
+        self.assertEqual(res.context["workers_count"], workers_count)
+        self.assertTemplateUsed("task_manager_app/index.html")
