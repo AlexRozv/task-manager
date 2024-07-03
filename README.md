@@ -15,7 +15,8 @@ Django project for managing tasks for IT companies. Using this simple app you ca
 * password: test12345
 
 ## Installation
-Python3 must be already installed
+* Python3 must be already installed
+* Create .env file using .env.sample with your enviromental variables
 
 ```shell
 git clone https://github.com/AlexRozv/task-manager.git #downloads project on yor device

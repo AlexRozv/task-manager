@@ -1,17 +1,17 @@
 import os
 from pathlib import Path
-import dj_database_url
+
+import dotenv
+
+dotenv.load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# add SECRET_KEY to your .env file or add it directly here
-SECRET_KEY = os.environ.get(
-    "DJANGO_SECRET_KEY",
-)
+SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY")
 
-DEBUG = "False"
+DEBUG = os.environ.get("DJANGO_DEBUG", False)
 
-ALLOWED_HOSTS = ["127.0.0.1", "localhost",]
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS")
 
 INSTALLED_APPS = [
     "django.contrib.admin",

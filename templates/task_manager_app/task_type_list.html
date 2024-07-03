@@ -1,10 +1,17 @@
 {% extends "base.html" %}
+{% load crispy_forms_filters %}
 {% block content %}
   <h1>Task types list
     <a href="{% url "task_manager_app:task-type-create" %}" class="btn btn-primary link-to-page">
       Create
     </a>
   </h1>
+  <form method="get" action="">
+  {% csrf_token %}
+  {{ search_form|crispy }}
+  <br>
+  <input type="submit" class="btn btn-primary" value="search">
+  </form>
   <hr>
   <br>
   {% if task_type_list %}
