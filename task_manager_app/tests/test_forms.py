@@ -1,3 +1,4 @@
+from django.contrib.auth import get_user_model
 from django.test import TestCase
 
 from task_manager_app.forms import (
@@ -7,6 +8,7 @@ from task_manager_app.forms import (
     TaskTypeNameSearchForm,
     PositionNameSearchForm
 )
+from task_manager_app.models import Worker
 
 
 class WorkerCreationFormTest(TestCase):
