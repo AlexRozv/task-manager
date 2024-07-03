@@ -5,7 +5,8 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
 
-from task_manager_app.forms import WorkerCreationForm, UpdateTaskAssigneesForm, TaskNameSearchForm
+from task_manager_app.forms import WorkerCreationForm, UpdateTaskAssigneesForm, TaskNameSearchForm, \
+    WorkerUsernameSearchForm, PositionNameSearchForm, TaskTypeNameSearchForm
 from task_manager_app.models import Task, TaskType, Position, Worker
 
 
@@ -88,7 +89,7 @@ class TaskTypeListView(LoginRequiredMixin, generic.ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(TaskTypeListView, self).get_context_data(**kwargs)
         name = self.request.GET.get("name", "")
-        context["search_form"] = TaskNameSearchForm(
+        context["search_form"] = TaskTypeNameSearchForm(
             initial={"name": name}
         )
         return context
@@ -142,7 +143,7 @@ class PositionListView(LoginRequiredMixin, generic.ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(PositionListView, self).get_context_data(**kwargs)
         name = self.request.GET.get("name", "")
-        context["search_form"] = TaskNameSearchForm(
+        context["search_form"] = PositionNameSearchForm(
             initial={"name": name}
         )
         return context
@@ -176,6 +177,21 @@ class PositionDeleteView(LoginRequiredMixin, generic.DeleteView):
 
 class WorkerListView(LoginRequiredMixin, generic.ListView):
     model = Worker
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(WorkerListView, self).get_context_data(**kwargs)
+        username = self.request.GET.get("username", "")
+        context["search_form"] = WorkerUsernameSearchForm(
+            initial={"username": username}
+        )
+        return context
+
+    def get_queryset(self):
+        queryset = Worker.objects.all()
+        username = self.request.GET.get("username")
+        if username:
+            return queryset.filter(username__icontains=username)
+        return queryset
 
 
 class WorkerDetailView(LoginRequiredMixin, generic.DetailView):
